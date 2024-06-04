@@ -1,4 +1,6 @@
 export { Button } from './Button/Button';
+export { ButtonNavigation } from './ButtonNavigation/ButtonNavigation';
 export { HeaderContainer } from './HeaderContainer/HeaderContainer';
+export { ProductForm } from './ProductForm/ProductForm';
 export { ProductList } from './ProductList/ProductList';
-export { Searcher } from './Searcher/Searcher';
+export { ValidatedInput } from './ValidatedInput/ValidatedInput';

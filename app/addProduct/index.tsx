@@ -1,18 +1,13 @@
-import { View, StyleSheet } from 'react-native';
-import { ButtonNavigation, HeaderContainer, ProductList } from '../components';
+import { View, Text, StyleSheet } from 'react-native';
+import { HeaderContainer, ProductForm } from '../../components';
 
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <HeaderContainer>
-        <ProductList />
+        <Text style={styles.headline}>Formulario de Registro</Text>
 
-        <ButtonNavigation
-          href={`/addProduct`}
-          color="#FFDD00"
-          text="Agregar"
-          textColor="#475145"
-        />
+        <ProductForm />
       </HeaderContainer>
     </View>
   );
@@ -24,5 +19,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
+  },
+  headline: {
+    fontSize: 30,
+    marginTop: 20,
   },
 });

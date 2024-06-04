@@ -1,27 +1,25 @@
-import { Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, Dimensions } from 'react-native';
+import { Link } from 'expo-router';
 
 const { width } = Dimensions.get('window');
 
-interface ButtonProps {
-  onPress: () => void;
+interface ButtonNavigationProps {
+  href: string;
   color?: string;
   text: string;
   textColor?: string;
 }
 
-export const Button: React.FC<ButtonProps> = ({
-  onPress,
+export const ButtonNavigation: React.FC<ButtonNavigationProps> = ({
+  href,
   color = '#E9ECF3',
   text,
   textColor = '#364A77',
 }) => {
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      style={[styles.button, { backgroundColor: color }]}
-    >
+    <Link href={href} style={[styles.button, { backgroundColor: color }]}>
       <Text style={[styles.buttonText, { color: textColor }]}>{text}</Text>
-    </TouchableOpacity>
+    </Link>
   );
 };
 

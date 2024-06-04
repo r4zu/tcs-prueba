@@ -1,11 +1,16 @@
-import { useLocalSearchParams } from 'expo-router';
 import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
+
 import { Button, HeaderContainer } from '../../components';
+import { useGetProducts } from '../../hooks';
 
 const { width } = Dimensions.get('window');
 
 export default function DetailsScreen() {
   const { id } = useLocalSearchParams();
+  const { products } = useGetProducts();
+
+  const filterProduct = products?.filter((p) => p.id === id);
 
   return (
     <View style={styles.container}>
@@ -19,43 +24,54 @@ export default function DetailsScreen() {
           <View style={styles.box2}>
             <View style={styles.parseInfo}>
               <Text style={styles.parseItems}>Nombre</Text>
-              <Text style={styles.parseFrontItems}>[Nombre-registrado]</Text>
+              <Text style={styles.parseFrontItems}>
+                {filterProduct
+                  ? filterProduct[0].name
+                  : '[Nombre - registrado]'}
+              </Text>
             </View>
 
             <View style={styles.parseInfo}>
               <Text style={styles.parseItems}>Descripción</Text>
               <Text style={styles.parseFrontItems}>
-                [Descripción-registrada]
+                {filterProduct
+                  ? filterProduct[0].description
+                  : '[Descripción - registrada]'}
               </Text>
             </View>
 
             <Text style={styles.parseItems}>Logo</Text>
             <Image
               source={{
-                uri: 'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
+                uri: filterProduct
+                  ? filterProduct[0].logo
+                  : 'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
               }}
               style={styles.image}
             />
 
             <View style={styles.parseInfo}>
               <Text style={styles.parseItems}>Fecha liberación</Text>
-              <Text style={styles.parseFrontItems}>[Fecha-liberación]</Text>
+              <Text style={styles.parseFrontItems}>
+                {filterProduct
+                  ? `${filterProduct[0].date_release}`.split('T')[0]
+                  : '[Fecha-liberación]'}
+              </Text>
             </View>
 
             <View style={styles.parseInfo}>
               <Text style={styles.parseItems}>Fecha revisión</Text>
-              <Text style={styles.parseFrontItems}>[Fecha-revisión]</Text>
+              <Text style={styles.parseFrontItems}>
+                {filterProduct
+                  ? `${filterProduct[0].date_revision}`.split('T')[0]
+                  : '[Fecha-revisión]'}
+              </Text>
             </View>
           </View>
 
           <View>
-            <Button onPress={() => {}} text="Editar" />
-            <Button
-              onPress={() => {}}
-              color="red"
-              text="Eliminar"
-              textColor="white"
-            />
+            <Button href={``} text="Editar" />
+            <Button href={``} color="red" text="Eliminar" textColor="white" />
           </View>
         </View>
       </HeaderContainer>
@@ -77,24 +93,28 @@ const styles = StyleSheet.create({
   },
   box1: {
     marginTop: 50,
+    marginHorizontal: 30,
   },
   box2: {
     flex: 1,
     justifyContent: 'space-between',
-    marginVertical: 70,
+    marginVertical: 100,
+    marginHorizontal: 30,
   },
   parseInfo: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   parseItems: {
-    fontSize: 16,
+    fontSize: 12,
     color: '#58585B',
   },
   parseFrontItems: {
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 12,
     color: '#58585B',
+    marginLeft: 40,
+    width: 150,
   },
   textId: {
     fontWeight: 'bold',
@@ -102,7 +122,8 @@ const styles = StyleSheet.create({
     color: '#58585B',
   },
   image: {
-    height: 150,
+    height: 100,
+    width: 200,
     resizeMode: 'cover',
   },
 });
