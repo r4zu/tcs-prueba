@@ -10,6 +10,7 @@ interface ValidatedInputProps {
   onChangeText: (text: string) => void;
   validate: (text: string) => string | null;
   error: string | null;
+  editable?: boolean;
 }
 
 export const ValidatedInput: React.FC<ValidatedInputProps> = ({
@@ -19,6 +20,7 @@ export const ValidatedInput: React.FC<ValidatedInputProps> = ({
   onChangeText,
   validate,
   error,
+  editable = true,
 }) => {
   const [localError, setLocalError] = useState<string | null>(null);
 
@@ -34,6 +36,7 @@ export const ValidatedInput: React.FC<ValidatedInputProps> = ({
         placeholder={placeholder}
         value={value}
         onChangeText={onChangeText}
+        editable={editable}
       />
       {localError || error ? (
         <Text style={styles.errorText}>{localError || error}</Text>

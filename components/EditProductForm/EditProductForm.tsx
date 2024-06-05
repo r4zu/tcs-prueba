@@ -1,17 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { View, StyleSheet, Dimensions, Alert } from 'react-native';
-import { useNavigation } from 'expo-router';
+import { useLocalSearchParams, useNavigation } from 'expo-router';
 import { z } from 'zod';
 
 import { ValidatedInput } from '../ValidatedInput/ValidatedInput';
 import { Button } from '../Button/Button';
-import { URL } from '../../hooks';
+import { URL, useGetProducts } from '../../hooks';
 import productSchema from '../../utils/validators';
 
 const { height } = Dimensions.get('window');
 
-export const ProductForm: React.FC = () => {
+export const EditProductForm: React.FC = () => {
+  const { id: idProduct } = useLocalSearchParams();
+  const { products } = useGetProducts();
   const { navigate } = useNavigation<any>();
+
+  const filterProduct = products?.filter((p) => p.id === idProduct);
 
   const [id, setId] = useState('');
   const [name, setName] = useState('');
@@ -20,6 +24,15 @@ export const ProductForm: React.FC = () => {
   const [releaseDate, setReleaseDate] = useState('');
   const [reviewDate, setReviewDate] = useState('');
   const [errors, setErrors] = useState<Product>();
+
+  useEffect(() => {
+    if (filterProduct) {
+      const { id, date_release, date_revision } = filterProduct[0];
+      setId(id);
+      setReleaseDate(date_release.split('T')[0]);
+      setReviewDate(date_revision.split('T')[0]);
+    }
+  }, [filterProduct]);
 
   const handleSubmit = async () => {
     if (releaseDate) {
@@ -41,7 +54,7 @@ export const ProductForm: React.FC = () => {
       productSchema.parse(formData);
 
       const response = await fetch(URL, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           authorId: '43',
@@ -55,7 +68,6 @@ export const ProductForm: React.FC = () => {
       if (response.ok) {
         navigate('index');
         Alert.alert('Éxito', 'Los datos se han enviado correctamente');
-        resetForm();
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -71,16 +83,6 @@ export const ProductForm: React.FC = () => {
     }
   };
 
-  const resetForm = () => {
-    setId('');
-    setName('');
-    setDescription('');
-    setLogo('');
-    setReleaseDate('');
-    setReviewDate('');
-    setErrors(undefined);
-  };
-
   return (
     <View style={styles.container}>
       <View>
@@ -90,6 +92,7 @@ export const ProductForm: React.FC = () => {
           onChangeText={setId}
           validate={() => (errors ? errors.id : null)}
           error={errors ? errors.id : null}
+          editable={false}
         />
         <ValidatedInput
           label="Nombre"
@@ -133,10 +136,9 @@ export const ProductForm: React.FC = () => {
         <Button
           onPress={handleSubmit}
           color="#FFDD00"
-          text="Agregar"
+          text="Aceptar edición"
           textColor="#475145"
         />
-        <Button onPress={resetForm} text="Reiniciar" />
       </View>
     </View>
   );

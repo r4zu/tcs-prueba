@@ -1,13 +1,13 @@
 import { View, Text, StyleSheet } from 'react-native';
-import { HeaderContainer, ProductForm } from '../../components';
+import { EditProductForm, HeaderContainer } from '../../../../components';
 
-export default function AddProduct() {
+export default function EditProduct() {
   return (
     <View style={styles.container}>
       <HeaderContainer>
-        <Text style={styles.headline}>Formulario de Registro</Text>
+        <Text style={styles.headline}>Actualizar Registro</Text>
 
-        <ProductForm />
+        <EditProductForm />
       </HeaderContainer>
     </View>
   );

@@ -1,5 +1,9 @@
 import { z } from 'zod';
 
+const DateString = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, {
+  message: 'La fecha debe estar en el formato YYYY-MM-DD',
+});
+
 const productSchema = z.object({
   id: z
     .string()
@@ -17,7 +21,7 @@ const productSchema = z.object({
       message: 'La Descripción debe tener como máximo 200 caracteres',
     }),
   logo: z.string().nonempty({ message: 'El Logo es requerido' }),
-  date_release: z.string().refine((date) => new Date(date) >= new Date(), {
+  date_release: DateString.refine((date) => new Date(date) >= new Date(), {
     message: 'La Fecha de Liberación debe ser hoy o en el futuro',
   }),
 });

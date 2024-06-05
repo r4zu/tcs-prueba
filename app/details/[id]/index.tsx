@@ -1,16 +1,62 @@
-import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
+import { useCallback, useEffect, useState } from 'react';
+import { View, Text, Image, StyleSheet, Dimensions, Alert } from 'react-native';
+import { useLocalSearchParams, useNavigation } from 'expo-router';
 
-import { Button, HeaderContainer } from '../../components';
-import { useGetProducts } from '../../hooks';
+import {
+  Button,
+  ButtonNavigation,
+  EliminationModal,
+  HeaderContainer,
+} from '../../../components';
+import { URL, callUrl, useGetProducts } from '../../../hooks';
 
 const { width } = Dimensions.get('window');
 
 export default function DetailsScreen() {
   const { id } = useLocalSearchParams();
-  const { products } = useGetProducts();
+  const { products, setProducts } = useGetProducts();
+  const { navigate, addListener } = useNavigation<any>();
+  const [modalVisible, setModalVisible] = useState(false);
 
   const filterProduct = products?.filter((p) => p.id === id);
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`${URL}?id=${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          authorId: '43',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al eliminar el producto');
+      }
+
+      setModalVisible(false);
+      navigate('index');
+      Alert.alert('Eliminado', 'El producto ha sido eliminado exitosamente.');
+    } catch (error) {
+      console.error('Error al eliminar el producto:', error);
+      Alert.alert(
+        'Error',
+        'Ocurrió un error al intentar eliminar el producto.'
+      );
+    }
+  };
+
+  const handleRefreshApplication = useCallback(() => {
+    callUrl().then((d) => setProducts(d));
+    // setProducts(dummyDatabase);
+  }, [callUrl]);
+
+  useEffect(() => {
+    const unsubscribe = addListener('focus', () => {
+      handleRefreshApplication();
+    });
+    return unsubscribe;
+  }, [addListener, handleRefreshApplication]);
 
   return (
     <View style={styles.container}>
@@ -70,11 +116,25 @@ export default function DetailsScreen() {
           </View>
 
           <View>
-            <Button href={``} text="Editar" />
-            <Button href={``} color="red" text="Eliminar" textColor="white" />
+            <ButtonNavigation
+              href={`/details/${id}/editProduct`}
+              text="Editar"
+            />
+            <Button
+              onPress={() => setModalVisible(true)}
+              color="red"
+              text="Eliminar"
+              textColor="white"
+            />
           </View>
         </View>
       </HeaderContainer>
+
+      <EliminationModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onConfirm={handleDelete}
+      />
     </View>
   );
 }
