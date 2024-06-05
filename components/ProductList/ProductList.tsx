@@ -7,6 +7,7 @@ import {
   RefreshControl,
   FlatList,
   TextInput,
+  ActivityIndicator,
 } from 'react-native';
 import { Link, useNavigation } from 'expo-router';
 import { AntDesign } from '@expo/vector-icons';
@@ -23,11 +24,15 @@ export const ProductList: React.FC<ProductListProps> = ({}) => {
   const [refreshing, setRefreshing] = useState(false);
   const [_, setSearchQuery] = useState('');
   const { products, setProducts } = useGetProducts();
+  const [loading, setLoading] = useState(true);
 
   const handleRefreshApplication = useCallback(() => {
-    callUrl().then((d) => setProducts(d));
+    callUrl().then((d) => {
+      setProducts(d);
+      setLoading(false);
+    });
     // setProducts(dummyDatabase);
-  }, [callUrl]);
+  }, [callUrl, setProducts]);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -54,6 +59,14 @@ export const ProductList: React.FC<ProductListProps> = ({}) => {
       setProducts(products);
     }
   };
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#FFDD00" />
+      </View>
+    );
+  }
 
   return (
     <View style={{ flex: 1 }}>
@@ -155,5 +168,10 @@ const styles = StyleSheet.create({
   productId: {
     fontSize: 13,
     color: '#AFAFB2',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

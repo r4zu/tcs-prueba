@@ -1,5 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  Alert,
+  ActivityIndicator,
+} from 'react-native';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 
 import {
@@ -17,6 +25,7 @@ export default function DetailsScreen() {
   const { products, setProducts } = useGetProducts();
   const { navigate, addListener } = useNavigation<any>();
   const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const filterProduct = products?.filter((p) => p.id === id);
 
@@ -47,7 +56,10 @@ export default function DetailsScreen() {
   };
 
   const handleRefreshApplication = useCallback(() => {
-    callUrl().then((d) => setProducts(d));
+    callUrl().then((d) => {
+      setProducts(d);
+      setLoading(false);
+    });
     // setProducts(dummyDatabase);
   }, [callUrl]);
 
@@ -57,6 +69,14 @@ export default function DetailsScreen() {
     });
     return unsubscribe;
   }, [addListener, handleRefreshApplication]);
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#FFDD00" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -185,5 +205,10 @@ const styles = StyleSheet.create({
     height: 100,
     width: 200,
     resizeMode: 'cover',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
