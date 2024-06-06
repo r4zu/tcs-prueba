@@ -13,7 +13,6 @@ import { Link, useNavigation } from 'expo-router';
 import { AntDesign } from '@expo/vector-icons';
 
 import { callUrl, useGetProducts } from '../../hooks';
-// import { dummyDatabase } from '../../dummyDatabase';
 
 const { width } = Dimensions.get('window');
 
@@ -31,7 +30,6 @@ export const ProductList: React.FC<ProductListProps> = ({}) => {
       setProducts(d);
       setLoading(false);
     });
-    // setProducts(dummyDatabase);
   }, [callUrl, setProducts]);
 
   const onRefresh = useCallback(() => {

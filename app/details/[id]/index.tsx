@@ -60,7 +60,6 @@ export default function DetailsScreen() {
       setProducts(d);
       setLoading(false);
     });
-    // setProducts(dummyDatabase);
   }, [callUrl]);
 
   useEffect(() => {

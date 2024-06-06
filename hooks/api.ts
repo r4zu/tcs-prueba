@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-// import { dummyDatabase } from '../dummyDatabase';
 
 export const URL =
   'https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros/bp/products';
@@ -28,7 +27,6 @@ export function useGetProducts() {
 
   useEffect(() => {
     callUrl().then((d) => setProducts(d));
-    // setProducts(dummyDatabase);
   }, []);
 
   return { products, setProducts };
