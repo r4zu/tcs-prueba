@@ -1,0 +1,199 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HeaderContainer component matches snapshot on Android 1`] = `
+<RNCSafeAreaView
+  edges={
+    {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "additive",
+    }
+  }
+  style={
+    {
+      "flex": 1,
+      "width": "100%",
+    }
+  }
+  testID="safe-area-view"
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "flex": 1,
+        "justifyContent": "flex-start",
+        "marginTop": 0,
+        "paddingTop": 10,
+      }
+    }
+    testID="content-view"
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginBottom": 10,
+        }
+      }
+      testID="header-view"
+    >
+      <View
+        testID="font-awesome-icon"
+      >
+        <Text
+          allowFontScaling={false}
+          selectable={false}
+          style={
+            [
+              {
+                "color": "#182F63",
+                "fontSize": 24,
+              },
+              undefined,
+              {
+                "fontFamily": "FontAwesome6Free-Solid",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              {
+                "fontWeight": "900",
+              },
+            ]
+          }
+        >
+          
+        </Text>
+      </View>
+      <Text
+        style={
+          {
+            "color": "#182F63",
+            "fontSize": 16,
+            "fontWeight": "bold",
+            "marginLeft": 10,
+          }
+        }
+        testID="header-text"
+      >
+        BANCO
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "backgroundColor": "#ccc",
+          "height": 1,
+          "width": "100%",
+        }
+      }
+      testID="separator-view"
+    />
+    <Text>
+      Snapshot Test
+    </Text>
+  </View>
+</RNCSafeAreaView>
+`;
+
+exports[`HeaderContainer component matches snapshot on iOS 1`] = `
+<RNCSafeAreaView
+  edges={
+    {
+      "bottom": "additive",
+      "left": "additive",
+      "right": "additive",
+      "top": "additive",
+    }
+  }
+  style={
+    {
+      "flex": 1,
+      "width": "100%",
+    }
+  }
+  testID="safe-area-view"
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "flex": 1,
+        "justifyContent": "flex-start",
+        "marginTop": 0,
+        "paddingTop": 10,
+      }
+    }
+    testID="content-view"
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "marginBottom": 10,
+        }
+      }
+      testID="header-view"
+    >
+      <View
+        testID="font-awesome-icon"
+      >
+        <Text
+          allowFontScaling={false}
+          selectable={false}
+          style={
+            [
+              {
+                "color": "#182F63",
+                "fontSize": 24,
+              },
+              undefined,
+              {
+                "fontFamily": "FontAwesome6Free-Solid",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              {
+                "fontWeight": "900",
+              },
+            ]
+          }
+        >
+          
+        </Text>
+      </View>
+      <Text
+        style={
+          {
+            "color": "#182F63",
+            "fontSize": 16,
+            "fontWeight": "bold",
+            "marginLeft": 10,
+          }
+        }
+        testID="header-text"
+      >
+        BANCO
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "backgroundColor": "#ccc",
+          "height": 1,
+          "width": "100%",
+        }
+      }
+      testID="separator-view"
+    />
+    <Text>
+      Snapshot Test
+    </Text>
+  </View>
+</RNCSafeAreaView>
+`;

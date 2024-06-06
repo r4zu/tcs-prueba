@@ -10,13 +10,17 @@ export const HeaderContainer: React.FC<HeaderContainerProps> = ({
   children,
 }) => {
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.header}>
-          <FontAwesome6 name="money-bills" size={24} color="#182F63" />
-          <Text style={styles.text}>BANCO</Text>
+    <SafeAreaView style={styles.container} testID="safe-area-view">
+      <View style={styles.content} testID="content-view">
+        <View style={styles.header} testID="header-view">
+          <View testID="font-awesome-icon">
+            <FontAwesome6 name="money-bills" size={24} color="#182F63" />
+          </View>
+          <Text style={styles.text} testID="header-text">
+            BANCO
+          </Text>
         </View>
-        <View style={styles.separator} />
+        <View style={styles.separator} testID="separator-view" />
         {children}
       </View>
     </SafeAreaView>
