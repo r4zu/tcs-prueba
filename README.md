@@ -18,3 +18,10 @@ $ pnpm install
 # development
 $ pnpm start
 ```
+
+### Ejecutar los test
+
+```bash
+# test
+$ pnpm test
+```
